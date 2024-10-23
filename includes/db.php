@@ -1,11 +1,12 @@
-<?php 
+<?php
 
 
-function rdata_plugin_create_tables() {
+function rdata_plugin_create_tables()
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'interactive_geo_maps';
     $charset_collate = $wpdb->get_charset_collate();
-    
+
     $sql = "
         CREATE TABLE $table_name (
             `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,12 +21,7 @@ function rdata_plugin_create_tables() {
             PRIMARY KEY (`id`)
         ) $charset_collate;
     ";
-    
+
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
 }
-
-
-
-
-?>

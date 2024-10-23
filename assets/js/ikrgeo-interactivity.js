@@ -28,7 +28,8 @@ items.forEach((ev,ind) =>{
   tab.push(id);
 })
 // select the svg path 
-console.log(tab)
+// console.log(tab)
+console.log(items)
 
 // add hover effect on mouse enter to the item 
 
@@ -44,8 +45,13 @@ console.log(tab)
       });
 
       function showTooltip(hover) {
+      
         let mapId =hover.target.id;
-    
+    console.log(mapId)
+        const get_target_element = ikrsvg.querySelector(`#${mapId}`);
+        console.log(get_target_element)
+        // // add a stock color in map id 
+        get_target_element.style.stroke ='black';
 
 
      
@@ -73,9 +79,7 @@ console.log(tab)
             tooltip.innerHTML=item.title;
             let cx = hover.clientX;
             let cy = hover.clientY;
-            tooltip.style.left =`${cx}px`;
-            tooltip.style.top =`${cy}px`;
-       
+            
             // clickItem.style.fill = 'red';
           }
           });

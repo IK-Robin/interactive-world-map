@@ -6,13 +6,15 @@ function add_rdat_scripts()
      $ikr_world_map_current_screen = get_current_screen();
 
 
-     var_dump($ikr_world_map_current_screen);
+
       if( $ikr_world_map_current_screen->base == "toplevel_page_interactive-world-map-robin" ){
-        wp_enqueue_script('from_submit', plugin_dir_url(__FILE__) . '/assets/js/ikrgeo-interactivity.js', array(), true);
+        wp_enqueue_script('from_submit', plugin_dir_url(__FILE__) . '../assets/js/ikrgeo-interactivity.js', array(),'1.0.1', true);
+
+        wp_enqueue_script('featch_data_from_server',plugin_dir_url(__FILE__) . '../assets/js/your-custom.js');
  
         
 
-wp_enqueue_script( 'ikr_interactive', plugin_dir_url( __FILE__ ) . './assets/js/ikrgeo-interactivity.js', array(), '1.0.0', true );
+
     
         wp_localize_script(
             'from_submit',
@@ -33,7 +35,15 @@ add_action('admin_enqueue_scripts', 'add_rdat_scripts');
 // add style 
 function add_world_map_enqueue_style()
 {
+
+    
+    $ikr_world_map_current_screen = get_current_screen();
+
+
+
+    if( $ikr_world_map_current_screen->base == "toplevel_page_interactive-world-map-robin" ){
     wp_enqueue_style('robingeo_enqueue_styel', plugin_dir_url(__FILE__) . '../assets/style/style.css', array(), '1.0.1','all');
+    }
 }
 
 add_action('admin_enqueue_scripts', 'add_world_map_enqueue_style');
