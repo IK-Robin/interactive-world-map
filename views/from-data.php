@@ -3,6 +3,8 @@
 
 <h1>Add to DB</h1>
  <form action="" id="rdata_from">
+ <?php wp_nonce_field('w_map_form_action', 'w_map_form_nonce'); ?>
+
      <div id="data-entries">
          <div class="data-entry">
              <label for="id">Map ID</label>
