@@ -10,7 +10,8 @@ function add_rdat_scripts()
       if( $ikr_world_map_current_screen->base == "toplevel_page_interactive-world-map-robin" ){
         wp_enqueue_script('from_submit', plugin_dir_url(__FILE__) . '../assets/js/ikrgeo-interactivity.js', array(),'1.0.1', true);
 
-        wp_enqueue_script('featch_data_from_server',plugin_dir_url(__FILE__) . '../assets/js/your-custom.js');
+        // wp_enqueue_script('featch_data_from_server',plugin_dir_url(__FILE__) . '../assets/js/your-custom.js');
+        wp_enqueue_script('featch_data_from_server',plugin_dir_url(__FILE__) . '../assets/js/worldmap-global.js');
  
         
 
@@ -21,7 +22,9 @@ function add_rdat_scripts()
             'your_ajax_object',
             array(
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'action' => 'rdata_save_data_add'
+                'action' => 'rdata_save_data_add',
+                "feacth" => "rdata_fetch_data",
+
             )
         );
       }

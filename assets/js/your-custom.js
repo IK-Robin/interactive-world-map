@@ -1,15 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const hovecolor = document.getElementById("hovecolor");
-
-  const fill_color = document.getElementById("fill_color");
-  const clickColor = document.getElementById("clickColor");
-
-  const typeHovcolor = document.getElementById("typeHovcolor");
-  const filltype = document.getElementById("filltype");
-  const typeClickColor = document.getElementById("typeClickColor");
-
-  const ikrTitle  =document.getElementById('ikrTitle');
-  const ikrdes  =document.getElementById('ikrdes');
+ 
 
 
   function updateColor() {

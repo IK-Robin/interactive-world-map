@@ -3,45 +3,27 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // create ajax function
-
-  function worldmp_makeAjaxRequestGlobal(fromdata, action, callback) {
-    var formData = new FormData(fromdata);
+  function worldmp_makeAjaxRequestGlobal(formDataElem, action, callback) {
+    var formData = new FormData(formDataElem);
     formData.append("action", action);
-  
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", ajaxurl, true);
-  
+
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        callback(true);
-        // console.log('object');
-        // var response = JSON.parse(xhr.responseText);
-       
-      }
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            // Assuming your server returns a success status
+            if (response.success) {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        }
     };
     xhr.send(formData);
-  }
-  
+}
   // featch data functuon
   
   function world_map_fetchAjaxRequest_single_request(actions, callback) {
