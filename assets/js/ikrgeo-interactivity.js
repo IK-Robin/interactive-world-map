@@ -30,6 +30,13 @@ const typeClickColor = document.getElementById("typeClickColor");
 
 
 
+ 
+//  get data on load 
+
+
+
+
+
 
 
 
@@ -50,7 +57,7 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
     };
     tab.push(id);
   });
-  console.log(tab)
+  
   // select the svg path
   // console.log(tab)
 
@@ -201,5 +208,7 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
     }
 
   }
+
+  featch_data_from_db();
 
 })
