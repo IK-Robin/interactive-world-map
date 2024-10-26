@@ -25,6 +25,8 @@ const clickColor = document.getElementById("clickColor");
 const typeHovcolor = document.getElementById("typeHovcolor");
 const filltype = document.getElementById("filltype");
 const typeClickColor = document.getElementById("typeClickColor");
+const rdata_submit_form  = document.getElementById('rdata_submit_form');
+
 
 //  get data on load
 
@@ -53,45 +55,47 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
 
   items.forEach((map_item, index) => {
     map_item.addEventListener("click", (ev) => {
-      const ct = ev.target;
-
-      // get the id of  the clicked item
-      const click_id = ct.id;
-
-      // set the id of the click item id in input fild map_id
-      map_id.value = click_id;
-
-      async function onclick_valid_inp() {
-        try {
-          const get_data_onclick = await world_map_fetchAjaxRequest(
-            your_ajax_object.feacth,
-            your_ajax_object.ajax_url
-          );
-    
-          console.log(get_data_onclick)
-          get_data_onclick.forEach(data =>{
-
-            ikrTitle.value = data.title;
-            ikrdes.value =  data.map_des;
-            hovecolor.value = data.hov_color;
-            typeHovcolor.value = data.hov_color;
-
-            fill_color.value = data.fill_color;
-            filltype.value = data.fill_color;
-
-
-            
-          });
-
-
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-      onclick_valid_inp();
-    });
+   
+      map_click_func(ev);
+    })
   });
+
+  
+  function map_click_func (event){
+    const ct = event.target;  
+    // get dataset from the svg path 
+
+    const data_set = ct.dataset;
+       // get the id of  the clicked item
+       const click_id = ct.id;
+
+       // set the id of the click item id in input fild map_id
+       map_id.value = click_id;
+
+    if (Object.keys(data_set).length === 0) {
+      ikrTitle.value = '';
+      ikrdes.value = '';
+      rdata_submit_form.value = "Submit"
+  } else {
+    // get the data from the dataset
+    ikrTitle.value = data_set.title;
+    ikrdes.value =  data_set.desc;
+    hovecolor.value = data_set.hover;
+    typeHovcolor.value = data_set.hover;
+
+    fill_color.value = data_set.fill;
+    filltype.value = data_set.fill;
+
+    // change the submit button value 
+
+    rdata_submit_form.value = "Edit"
+
+  }
+
+
+
+ 
+  }
 
   // add form submition  event listener
 
