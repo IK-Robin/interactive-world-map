@@ -233,59 +233,119 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
           });
         });
 
-      // Function to populate table
-      function populateTable(data) {
-          const tableBody = document.querySelector('#mapTable tbody');
-          tableBody.innerHTML = ''; // Clear existing rows
-      
-          data.forEach((item,ind) => {
-              const row = document.createElement('tr');
-              
-              row.innerHTML = `
-                  <td>${ind +1 }</td>
-                  <td>${item.map_id}</td>
-                  <td>${item.title}</td>
-                  <td>${item.map_des}</td>
-                  <td style="background-color: ${item.hov_color};">${item.hov_color}</td>
-                  <td style="background-color: ${item.fill_color};">${item.fill_color}</td>
-                  <td style="background-color: ${item.click_color};">${item.click_color || 'N/A'}</td>
-                  <td>
-                      <button class="edit-btn" data-id="${item.map_id}">Edit</button>
-                      <button class="delete-btn" data-id="${item.map_id}">Delete</button>
-                  </td>
-              `;
-      
-              tableBody.appendChild(row);
-          });
-      }
-      
-      // Event listeners for Edit and Delete buttons
-      document.addEventListener('click', function(event) {
-          const target = event.target;
-          const id = target.getAttribute('data-id');
-      
-          if (target.classList.contains('edit-btn')) {
-              // Trigger edit functionality
-              editEntry(id);
-          } else if (target.classList.contains('delete-btn')) {
-              // Trigger delete functionality
-              deleteEntry(id);
-          }
-      });
-      
-      // Function to handle edit
-      function editEntry(id) {
-      //  open a bootstrap modal  
+      // Array of objects for initial population
+const mapData = [
+  {
+      "id": "37",
+      "map_id": "wd_2",
+      "title": "robin 24 hello 44 4",
+      "map_des": "hood4",
+      "hov_color": "#fc032f",
+      "fill_color": "#0000ff",
+      "click_color": "#0000FF"
+  },
+  {
+      "id": "42",
+      "map_id": "wd_5",
+      "title": "w5",
+      "map_des": "robin 5",
+      "hov_color": "#31ce38",
+      "fill_color": "#ff80ff",
+      "click_color": ""
+  }
+];
 
-      }
+// Function to populate the table
+function populateTable(data) {
+  const tableBody = document.querySelector('#mapTable tbody');
+  tableBody.innerHTML = ''; // Clear existing rows
+
+  data.forEach((item, ind) => {
+      const row = document.createElement('tr');
       
-      // Function to handle delete
-      function deleteEntry(id) {
-        //  open a bootstrap modal 
-      }
+      row.innerHTML = `
+          <td>${ind + 1}</td>
+          <td>${item.map_id}</td>
+          <td>${item.title}</td>
+          <td>${item.map_des}</td>
+          <td style="background-color: ${item.hov_color};">${item.hov_color}</td>
+          <td style="background-color: ${item.fill_color};">${item.fill_color}</td>
+          <td style="background-color: ${item.click_color};">${item.click_color || 'N/A'}</td>
+          <td>
+              <button class="edit-btn btn btn-sm btn-primary" data-id="${item.map_id}">Edit</button>
+              <button class="delete-btn btn btn-sm btn-danger" data-id="${item.map_id}">Delete</button>
+          </td>
+      `;
       
-      // Initial population of table
-      populateTable(response);
+      tableBody.appendChild(row);
+  });
+}
+
+// Show the modal with form data for adding or editing
+function showModal(isEdit = false, data = {}) {
+  document.getElementById("map_id").value = isEdit ? data.map_id : '';
+  document.getElementById("ikrTitle").value = isEdit ? data.title : '';
+  document.getElementById("ikrdes").value = isEdit ? data.map_des : '';
+  document.getElementById("typeHovcolor").value = isEdit ? data.hov_color : '#0000FF';
+  document.getElementById("filltype").value = isEdit ? data.fill_color : '#0000FF';
+  document.getElementById("typeClickColor").value = isEdit ? data.click_color : '#0000FF';
+
+  $('#dataModal').modal('show');
+}
+
+// Event listener for table actions
+document.addEventListener('click', function(event) {
+  const target = event.target;
+  const id = target.getAttribute('data-id');
+  
+  if (target.classList.contains('edit-btn')) {
+      const itemData = mapData.find(item => item.map_id === id);
+      showModal(true, itemData);
+  } else if (target.classList.contains('delete-btn')) {
+      deleteEntry(id);
+  }
+});
+
+// Save entry on form submit
+document.getElementById('dataForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const id = document.getElementById("map_id").value;
+  const title = document.getElementById("ikrTitle").value;
+  const description = document.getElementById("ikrdes").value;
+  const hoverColor = document.getElementById("typeHovcolor").value;
+  const fillColor = document.getElementById("filltype").value;
+  const clickColor = document.getElementById("typeClickColor").value;
+
+  if (id) {
+      // Handle edit case
+      const entry = mapData.find(item => item.map_id === id);
+      if (entry) {
+          entry.title = title;
+          entry.map_des = description;
+          entry.hov_color = hoverColor;
+          entry.fill_color = fillColor;
+          entry.click_color = clickColor;
+      }
+  } else {
+      // Handle add case
+      mapData.push({
+          id: String(mapData.length + 1),
+          map_id: 'wd_' + (mapData.length + 1),
+          title,
+          map_des: description,
+          hov_color: hoverColor,
+          fill_color: fillColor,
+          click_color: clickColor
+      });
+  }
+
+  $('#dataModal').modal('hide');
+  populateTable(mapData);
+});
+
+// Initial population of the table
+populateTable(mapData);
+
       }
     } catch (err) {
       console.log(err);

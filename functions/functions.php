@@ -13,7 +13,20 @@ function add_rdat_scripts()
         // wp_enqueue_script('featch_data_from_server',plugin_dir_url(__FILE__) . '../assets/js/your-custom.js');
         wp_enqueue_script('featch_data_from_server', plugin_dir_url(__FILE__) . '../assets/js/worldmap-global.js');
 
-
+        wp_enqueue_script(
+            'bootstrapJs-proper',
+            'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
+            array(),
+            '2.9.2',
+            true // Load in footer
+        );
+        wp_enqueue_script(
+            'robinbootstrapJs-main',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js',
+            array(),
+            '2.9.2',
+            true // Load in footer
+        );
 
 
 
@@ -44,9 +57,14 @@ function add_world_map_enqueue_style()
     $ikr_world_map_current_screen = get_current_screen();
 
 
-
     if ($ikr_world_map_current_screen->base == "toplevel_page_interactive-world-map-robin") {
         wp_enqueue_style('robingeo_enqueue_styel', plugin_dir_url(__FILE__) . '../assets/style/style.css', array(), '1.0.1', 'all');
+        wp_enqueue_style(
+            'ikr_bootstrap_css',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
+            array(),
+            '5.0.2'
+        );
     }
 }
 

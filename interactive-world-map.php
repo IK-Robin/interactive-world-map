@@ -54,14 +54,14 @@ function rdata_add_show_data()
    ?>
    <h1> show from data</h1>
   
-   
 
 
+<?php  include_once ROBIN_DIR_PATH_WORLD . '/views/show_data.php' ?>
 
 
    <?php
 
-   include_once RBOIN_DIR_PATH . './views/show-form-data.php';
+   // include_once ROBIN_DIR_PATH_WORLD. './views/show-form-data.php';
    ?>
 
 
