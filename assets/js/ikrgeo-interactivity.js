@@ -63,13 +63,27 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
 
       async function onclick_valid_inp() {
         try {
-          const responses = await world_map_fetchAjaxRequest(
+          const get_data_onclick = await world_map_fetchAjaxRequest(
             your_ajax_object.feacth,
             your_ajax_object.ajax_url
           );
     
+          console.log(get_data_onclick)
+          get_data_onclick.forEach(data =>{
 
-          console.log(responses);
+            ikrTitle.value = data.title;
+            ikrdes.value =  data.map_des;
+            hovecolor.value = data.hov_color;
+            typeHovcolor.value = data.hov_color;
+
+            fill_color.value = data.fill_color;
+            filltype.value = data.fill_color;
+
+
+            
+          });
+
+
         } catch (error) {
           console.log(error);
         }
@@ -134,9 +148,11 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
 
   form_inp.addEventListener("submit", (subEv) => {
     subEv.preventDefault(); // Prevent default form submission
+ const  change_color = ikrsvg.querySelector(`#${map_id.value}`);
+    change_color.style.fill=fill_color.value;
 
     // Create a FormData object to capture the form values
-
+    
     worldmp_makeAjaxRequestGlobal(
       form_inp,
       your_ajax_object.action,
@@ -176,8 +192,11 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
           response.forEach((data) => {
             if (mapId.id == data.map_id) {
               const setColor = ikrsvg.querySelector(`#${mapId.id}`);
-
-              setColor.style.fill = `${data.hov_color}`;
+              setColor.setAttribute("data-fill", data.fill_color); 
+              setColor.setAttribute("data-hover", data.hov_color); 
+              setColor.setAttribute('data-title', data.title);
+              setColor.setAttribute('data-desc', data.map_des);
+              setColor.style.fill = `${data.fill_color}`;
             }
           });
         });
