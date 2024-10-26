@@ -53,6 +53,12 @@ function rdata_add_show_data()
 
    ?>
    <h1> show from data</h1>
+  
+   
+
+
+
+
    <?php
 
    include_once RBOIN_DIR_PATH . './views/show-form-data.php';

@@ -213,13 +213,13 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
         your_ajax_object.ajax_url
       );
 
+      console.log(response)
       // check the  response status code
 
       if (response.length == 0) {
         console.log("No data found");
       } else {
         // set the color of  the map based on the data
-
         items.forEach((mapId) => {
           response.forEach((data) => {
             if (mapId.id == data.map_id) {
@@ -232,6 +232,60 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
             }
           });
         });
+
+      // Function to populate table
+      function populateTable(data) {
+          const tableBody = document.querySelector('#mapTable tbody');
+          tableBody.innerHTML = ''; // Clear existing rows
+      
+          data.forEach((item,ind) => {
+              const row = document.createElement('tr');
+              
+              row.innerHTML = `
+                  <td>${ind +1 }</td>
+                  <td>${item.map_id}</td>
+                  <td>${item.title}</td>
+                  <td>${item.map_des}</td>
+                  <td style="background-color: ${item.hov_color};">${item.hov_color}</td>
+                  <td style="background-color: ${item.fill_color};">${item.fill_color}</td>
+                  <td style="background-color: ${item.click_color};">${item.click_color || 'N/A'}</td>
+                  <td>
+                      <button class="edit-btn" data-id="${item.map_id}">Edit</button>
+                      <button class="delete-btn" data-id="${item.map_id}">Delete</button>
+                  </td>
+              `;
+      
+              tableBody.appendChild(row);
+          });
+      }
+      
+      // Event listeners for Edit and Delete buttons
+      document.addEventListener('click', function(event) {
+          const target = event.target;
+          const id = target.getAttribute('data-id');
+      
+          if (target.classList.contains('edit-btn')) {
+              // Trigger edit functionality
+              editEntry(id);
+          } else if (target.classList.contains('delete-btn')) {
+              // Trigger delete functionality
+              deleteEntry(id);
+          }
+      });
+      
+      // Function to handle edit
+      function editEntry(id) {
+      //  open a bootstrap modal  
+
+      }
+      
+      // Function to handle delete
+      function deleteEntry(id) {
+        //  open a bootstrap modal 
+      }
+      
+      // Initial population of table
+      populateTable(response);
       }
     } catch (err) {
       console.log(err);
