@@ -20,11 +20,10 @@ const closebtn = document.getElementById("close");
 
 const hovecolor = document.getElementById("hovecolor");
 const fill_color = document.getElementById("fill_color");
-const clickColor = document.getElementById("clickColor");
 
 const typeHovcolor = document.getElementById("typeHovcolor");
 const filltype = document.getElementById("filltype");
-const typeClickColor = document.getElementById("typeClickColor");
+
 const rdata_submit_form  = document.getElementById('rdata_submit_form');
 
 
@@ -89,6 +88,7 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
     // change the submit button value 
 
     rdata_submit_form.value = "Edit"
+    
 
   }
 
@@ -136,7 +136,7 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
   // set the color on input filde if the clore is change
   colorTypes(typeHovcolor, hovecolor);
   colorTypes(filltype, fill_color);
-  colorTypes(typeClickColor, clickColor);
+  
 
   const setColorType = (element, setColorTypes) => {
     element.addEventListener("keyup", (ev) => {
@@ -148,14 +148,38 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
 
   setColorType(hovecolor, typeHovcolor);
   setColorType(fill_color, filltype);
-  setColorType(clickColor, typeClickColor);
+ 
 
   form_inp.addEventListener("submit", (subEv) => {
     subEv.preventDefault(); // Prevent default form submission
+
+
+
  const  change_color = ikrsvg.querySelector(`#${map_id.value}`);
     change_color.style.fill=fill_color.value;
 
-    // Create a FormData object to capture the form values
+
+    // check the value of the submit btn to change the edit or add mode
+
+    if(rdata_submit_form.value == 'Edit'){
+
+      // send request to edit the data 
+      worldmp_makeAjaxRequestGlobal(
+        form_inp,
+        your_ajax_object.edit_data,
+        (success) => {
+          if (success) {
+            console.log("Data successfully sent to the server.");
+  
+            // Fetch data from the database after the data is sent successfully
+            featch_data_from_db();
+          } else {
+            console.log("Failed to send data.");
+          }
+        }
+      );
+    }else{
+       // Create a FormData object to capture the form values
     
     worldmp_makeAjaxRequestGlobal(
       form_inp,
@@ -171,6 +195,10 @@ ikrgooMap.addEventListener("load", (irkcontent) => {
         }
       }
     );
+    }
+
+
+  
 
     // featch_data_from_db();
   });
